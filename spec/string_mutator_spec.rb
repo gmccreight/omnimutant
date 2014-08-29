@@ -1,11 +1,11 @@
 require_relative "./spec_helper"
 
-require "mutant/string_mutator"
+require "omnimutant/string_mutator"
 
-describe Mutant::StringMutator do
+describe Omnimutant::StringMutator do
 
   def mutate_string string
-    mutator = Mutant::StringMutator.new(string)
+    mutator = Omnimutant::StringMutator.new(string)
     mutator.get_all_mutations()
   end
 

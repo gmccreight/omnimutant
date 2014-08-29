@@ -1,3 +1,3 @@
-require "mutant"
+require "omnimutant"
 
 require "minitest/autorun"
