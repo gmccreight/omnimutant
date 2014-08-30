@@ -21,7 +21,7 @@ describe Omnimutant::TestRunner do
   end
 
   it "should stop a program that runs too long" do
-    runner = example_command_with_timeout("/ruby/example2_spec.rb", 1)
+    runner = example_command_with_timeout("/ruby/example2_spec.rb", 0.5)
     assert_equal runner.exceeded_time?, true
     assert_equal runner.get_result, ""
   end
