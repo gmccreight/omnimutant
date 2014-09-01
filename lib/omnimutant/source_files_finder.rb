@@ -3,12 +3,13 @@ require 'fileutils'
 
 module Omnimutant
 
-  class Files
+  class SourceFilesFinder
 
     def initialize(dirs:, matchers:)
       @dirs = dirs
       @matchers = matchers
       @files_list = []
+      @index = nil
     end
 
     def load
@@ -21,7 +22,18 @@ module Omnimutant
     end
 
     def get_files
+      load()
       @files_list
+    end
+
+    def get_current_file
+      if @files_list.size > 0
+        @files_list[@index]
+      end
+    end
+
+    def move_next
+
     end
 
     def files_for_dir_and_matcher(dir, matcher)
