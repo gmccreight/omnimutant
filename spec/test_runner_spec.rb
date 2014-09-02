@@ -8,22 +8,38 @@ describe Omnimutant::TestRunner do
     file = File.expand_path(File.dirname(__FILE__)) +
       "/examples/" + example
     command = "ruby " + file
-    runner = Omnimutant::TestRunner.new(timeout:timeout, test_command:command)
+
+    test_passing_regex =
+      %r{[1-9][0-9]* tests, [1-9][0-9]* assertions, 0 failures, 0 errors, 0 skips}
+    runner = Omnimutant::TestRunner.new(
+      timeout:timeout, test_command:command, test_passing_regex:test_passing_regex)
     runner.start_test()
     runner
   end
 
-  it "should get the results from running the command" do
-    runner = example_command_with_timeout("/ruby/example1_spec.rb", 3)
-    assert_equal runner.exceeded_time?, false
-    assert_equal runner.get_result.lines.last.chomp,
-      "1 tests, 1 assertions, 0 failures, 0 errors, 0 skips"
+  describe "timeouts" do
+
+    it "should report pass if the test passed and did not timeout" do
+      runner = example_command_with_timeout("/ruby/example1_spec.rb", 3)
+      assert_equal runner.exceeded_time?, false
+      assert runner.passed?
+    end
+
+    it "should stop a program that runs too long, and report failure" do
+      runner = example_command_with_timeout("/ruby/example2_spec.rb", 0.5)
+      assert_equal runner.exceeded_time?, true
+      assert ! runner.passed?
+    end
+
   end
 
-  it "should stop a program that runs too long" do
-    runner = example_command_with_timeout("/ruby/example2_spec.rb", 0.5)
-    assert_equal runner.exceeded_time?, true
-    assert_equal runner.get_result, ""
+  describe "failure" do
+
+    it "should not pass if the test does not pass" do
+      runner = example_command_with_timeout("/ruby/example3_spec.rb", 3)
+      assert ! runner.passed?
+    end
+
   end
 
 end
