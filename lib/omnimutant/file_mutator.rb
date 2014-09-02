@@ -26,7 +26,7 @@ module Omnimutant
     end
 
     def report
-      puts @current_line_number
+      puts get_current_line_number
       puts @current_mutation_number
       puts
     end
@@ -34,15 +34,15 @@ module Omnimutant
     def is_done_mutating?
       return false if has_more_mutations_to_try_on_current_line?
       return false if has_more_lines_to_try?
+      reset_to_original()
       true
     end
 
     private def run_current_mutation
-      line = @file_original_data.lines[@current_line_number]
+      line = @file_original_data.lines[get_current_line_number]
       if line.chomp.size > 0
-        mutated_line = current_line_mutations[@current_mutation_number]
         replace_line filepath:@filepath,
-          line_number:@current_line_number, new_content:mutated_line
+          line_number:get_current_line_number, new_content:get_mutated_line
       end
     end
 
@@ -50,8 +50,16 @@ module Omnimutant
       write_file @filepath, @file_original_data
     end
 
-    private def current_line_content
-      @file_original_data.lines[@current_line_number]
+    def get_original_line
+      @file_original_data.lines[get_current_line_number]
+    end
+
+    def get_current_line_number
+      @current_line_number
+    end
+
+    def get_mutated_line
+      current_line_mutations[@current_mutation_number]
     end
 
     private def has_more_mutations_to_try_on_current_line?
@@ -63,12 +71,12 @@ module Omnimutant
     end
 
     private def current_line_mutations
-      line = current_line_content()
+      line = get_original_line()
       StringMutator.new(line).get_all_mutations()
     end
 
     private def has_more_lines_to_try?
-      @current_line_number < @total_lines - 1
+      get_current_line_number < @total_lines - 1
     end
 
     private def replace_line(filepath:, line_number:, new_content:)
