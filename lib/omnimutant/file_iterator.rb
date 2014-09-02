@@ -20,7 +20,7 @@ module Omnimutant
     end
 
     def is_at_end?
-      @index = @files.size - 1
+      @index == @files.size - 1
     end
 
   end
