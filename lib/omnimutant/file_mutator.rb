@@ -22,7 +22,7 @@ module Omnimutant
         return false
       end
 
-      run_mutation()
+      run_current_mutation()
     end
 
     def report
@@ -37,7 +37,7 @@ module Omnimutant
       true
     end
 
-    def run_mutation
+    private def run_current_mutation
       line = @file_original_data.lines[@current_line_number]
       if line.chomp.size > 0
         mutated_line = current_line_mutations[@current_mutation_number]
@@ -81,7 +81,7 @@ module Omnimutant
           new_file_data << line
         end
       end
-      write_file filepath, file_data
+      write_file filepath, new_file_data
     end
 
     private def say message

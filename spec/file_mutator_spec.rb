@@ -37,13 +37,15 @@ describe Omnimutant::FileMutator do
     @mutator = Omnimutant::FileMutator.new(@tmpfile.path)
   end
 
-  # it "should modify == to != at some point" do
-  #   50.times do
-  #     @mutator.do_next_mutation
-  #     lines = read_tmp_file.lines
-  #     lines.select{|x| x =~ /if base/}.each{|x| puts x}
-  #   end
-  # end
+  it "should modify 'if base == 3' to 'if base != 3' at some point" do
+    all_if_base_lines = []
+    while ! @mutator.is_done_mutating? do
+      @mutator.do_next_mutation
+      lines = read_tmp_file.lines
+      all_if_base_lines << lines.select{|x| x =~ /if base/}
+    end
+    assert all_if_base_lines.flatten.join("\n").include?("if base != 3")
+  end
 
   describe "completion" do
 
