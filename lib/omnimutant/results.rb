@@ -3,6 +3,10 @@ module Omnimutant
   class Results
 
     def initialize()
+      reset()
+    end
+
+    def reset
       @unexpected_passes = []
     end
 

@@ -23,6 +23,10 @@ module Omnimutant
       @index == @files.size - 1
     end
 
+    def is_beyond_end?
+      @index >= @files.size
+    end
+
   end
 
 end
