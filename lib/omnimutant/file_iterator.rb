@@ -14,7 +14,7 @@ module Omnimutant
     end
 
     def move_next
-      if ! is_at_end?
+      if ! is_beyond_end?
         @index += 1
       end
     end

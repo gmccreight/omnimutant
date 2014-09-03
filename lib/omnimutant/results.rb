@@ -18,14 +18,7 @@ module Omnimutant
     end
 
     def report
-      @unexpected_passes.each do |pass|
-        puts "filepath: #{pass[:filepath]}"
-        puts "line_number: #{pass[:line_number]}"
-        puts "original_line: #{pass[:original_line]}"
-        puts "mutated_line: #{pass[:mutated_line]}"
-        puts ""
-        puts ""
-      end
+      @unexpected_passes
     end
 
   end

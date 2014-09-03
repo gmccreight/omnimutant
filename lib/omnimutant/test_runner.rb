@@ -26,6 +26,7 @@ module Omnimutant
     def passed?
       return false if exceeded_time?
       result = get_result
+      return false if ! result
       if result.match(@test_passing_regex)
         true
       else
