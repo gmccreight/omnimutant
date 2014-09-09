@@ -15,7 +15,7 @@ runner = Omnimutant::Runner.new(
   timeout:5,
   test_command:"cd #{base_dir}; rake 2>&1",
   test_passing_regex:test_passing_regex,
-  verbose:true
+  verbose:1
 )
 
 runner.run()
