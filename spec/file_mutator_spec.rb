@@ -34,7 +34,7 @@ describe Omnimutant::FileMutator do
 
   before do
     create_tmp_file
-    @mutator = Omnimutant::FileMutator.new(@tmpfile.path)
+    @mutator = Omnimutant::FileMutator.new(filepath:@tmpfile.path)
   end
 
   it "should modify 'if base == 3' to 'if base != 3' at some point" do

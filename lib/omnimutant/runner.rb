@@ -22,7 +22,8 @@ module Omnimutant
       iterator = Omnimutant::FileIterator.new(files:source_files)
       while ! iterator.is_beyond_end?
         vputs(1, "file: " + iterator.get_current_file)
-        mutator = Omnimutant::FileMutator.new(iterator.get_current_file)
+        mutator = Omnimutant::FileMutator.
+          new(filepath: iterator.get_current_file, verbose:@verbose)
         while ! mutator.is_done_mutating?
           mutator.do_next_mutation()
           vputs(1, "line number: " + mutator.get_current_line_number.to_s)

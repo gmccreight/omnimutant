@@ -2,13 +2,14 @@ module Omnimutant
 
   class FileMutator
 
-    def initialize(filepath)
+    def initialize(filepath:, verbose:0)
       @filepath = filepath
       @file_original_data = File.read(@filepath)
       @total_lines = @file_original_data.lines.size
 
       @current_line_number = 0
       @current_mutation_number = -1
+      @verbose = verbose
     end
 
     def do_next_mutation
@@ -84,6 +85,8 @@ module Omnimutant
       file_data = File.read(filepath)
       file_data.lines.each_with_index do |line, index|
         if index == line_number
+          vputs(2, "replace_line - before: " + line)
+          vputs(2, "replace_line - after : " + new_content)
           new_file_data << new_content
         else
           new_file_data << line
@@ -92,12 +95,14 @@ module Omnimutant
       write_file filepath, new_file_data
     end
 
-    private def say message
-      puts message
-    end
-
     private def write_file(filepath, data)
       File.open(filepath, 'w') { |file| file.write(data) }
+    end
+
+    private def vputs(level, message)
+      if @verbose >= level
+        puts message
+      end
     end
 
   end
