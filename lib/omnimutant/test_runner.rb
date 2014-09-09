@@ -48,7 +48,7 @@ module Omnimutant
         status = Timeout::timeout(timeout) {
           Process.waitpid2(pipe.pid)
           output = pipe.gets(nil)
-          vputs(3, output)
+          vputs(4, output)
         }
       rescue Timeout::Error
         Process.kill('KILL', pipe.pid)

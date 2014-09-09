@@ -23,7 +23,13 @@ module Omnimutant
         return false
       end
 
-      run_current_mutation()
+      line = @file_original_data.lines[get_current_line_number]
+      if line.chomp.size > 0
+        run_current_mutation()
+        return true
+      else
+        return do_next_mutation()
+      end
     end
 
     def report
@@ -40,11 +46,8 @@ module Omnimutant
     end
 
     private def run_current_mutation
-      line = @file_original_data.lines[get_current_line_number]
-      if line.chomp.size > 0
-        replace_line filepath:@filepath,
-          line_number:get_current_line_number, new_content:get_mutated_line
-      end
+      replace_line filepath:@filepath,
+        line_number:get_current_line_number, new_content:get_mutated_line
     end
 
     def reset_to_original

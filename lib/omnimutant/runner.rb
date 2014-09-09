@@ -36,6 +36,7 @@ module Omnimutant
           )
           test_runner.start_test()
           if test_runner.passed?
+            vputs(3, File.read(iterator.get_current_file))
             @results.log_pass(
               filepath:iterator.get_current_file,
               line_number:mutator.get_current_line_number,
