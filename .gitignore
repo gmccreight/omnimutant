@@ -1,4 +1,4 @@
 .ruby-gemset
 .ruby-version
 .DS_Store
-playground.rb
+playground*
