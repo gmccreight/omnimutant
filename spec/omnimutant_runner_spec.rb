@@ -23,7 +23,7 @@ describe Omnimutant::Runner do
         timeout:5,
         test_command:"ruby " + dest_dir + "/example4_spec.rb 2>&1",
         test_passing_regex:test_passing_regex,
-        verbose:false
+        verbose:0
       )
       @runner.run()
     end

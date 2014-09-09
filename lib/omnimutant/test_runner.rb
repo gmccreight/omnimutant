@@ -4,11 +4,12 @@ module Omnimutant
 
   class TestRunner
 
-    def initialize(timeout:, test_command:, test_passing_regex:)
+    def initialize(timeout:, test_command:, test_passing_regex:, verbose:0)
       @timeout = timeout
       @test_command = test_command
       @test_passing_regex = test_passing_regex
       @exceeded_timeout = false
+      @verbose = verbose
     end
 
     def start_test
@@ -36,6 +37,7 @@ module Omnimutant
 
     private def execute_with_timeout!(command, timeout)
       begin
+        vputs(2, "running: " + command)
         pipe = IO.popen(command, 'r')
       rescue Exception => e
         raise "Execution of command #{command} unsuccessful"
@@ -46,6 +48,7 @@ module Omnimutant
         status = Timeout::timeout(timeout) {
           Process.waitpid2(pipe.pid)
           output = pipe.gets(nil)
+          vputs(3, output)
         }
       rescue Timeout::Error
         Process.kill('KILL', pipe.pid)
@@ -53,6 +56,12 @@ module Omnimutant
       end
       pipe.close
       output
+    end
+
+    private def vputs(level, message)
+      if @verbose >= level
+        puts message
+      end
     end
 
   end
