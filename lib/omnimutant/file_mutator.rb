@@ -24,7 +24,7 @@ module Omnimutant
       end
 
       line = @file_original_data.lines[get_current_line_number]
-      if line.chomp.size > 0
+      if line.chomp.size > 0 && line !~ /^\s*#/
         run_current_mutation()
         return true
       else
