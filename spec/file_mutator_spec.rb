@@ -50,7 +50,7 @@ describe Omnimutant::FileMutator do
   describe "completion" do
 
     it "should know that it is not yet done mutating" do
-      10.times do
+      3.times do
         @mutator.do_next_mutation
       end
       assert ! @mutator.is_done_mutating?
