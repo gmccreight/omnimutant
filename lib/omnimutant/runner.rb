@@ -4,10 +4,9 @@ module Omnimutant
 
   class Runner
 
-    def initialize(dirs:, matchers:, timeout:, test_command:,
+    def initialize(dirs_and_matchers:, timeout:, test_command:,
                    test_passing_regex:, verbose:0)
-      @dirs = dirs
-      @matchers = matchers
+      @dirs_and_matchers = dirs_and_matchers
       @timeout = timeout
       @test_command = test_command
       @test_passing_regex = test_passing_regex
@@ -64,7 +63,7 @@ module Omnimutant
 
     private def get_the_source_files
       Omnimutant::SourceFilesFinder.
-        new(dirs:@dirs, matchers:@matchers).get_files
+        new(dirs_and_matchers:@dirs_and_matchers).get_files
     end
 
   end

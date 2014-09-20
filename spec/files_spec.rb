@@ -12,10 +12,9 @@ describe Omnimutant::SourceFilesFinder do
   end
 
   it "should find the files" do
-    dirs = [full_path_for("/examples/ruby")]
-    matchers = [%r{example1}]
+    dirs_and_matchers = [[full_path_for("/examples/ruby"), %r{example1}]]
 
-    f = Omnimutant::SourceFilesFinder.new(dirs:dirs, matchers:matchers)
+    f = Omnimutant::SourceFilesFinder.new(dirs_and_matchers:dirs_and_matchers)
     files = f.get_files()
 
     files.map{|x| x.gsub!(/.*\//, '')}

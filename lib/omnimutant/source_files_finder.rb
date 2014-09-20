@@ -5,17 +5,17 @@ module Omnimutant
 
   class SourceFilesFinder
 
-    def initialize(dirs:, matchers:)
-      @dirs = dirs
-      @matchers = matchers
+    def initialize(dirs_and_matchers:)
+      @dirs_and_matchers = dirs_and_matchers
       @files_list = []
       @index = nil
     end
 
     def load
       all_files = []
-      @dirs.each_with_index do |dir, i|
-        files = files_for_dir_and_matcher(dir, @matchers[i])
+      @dirs_and_matchers.each do |dir_and_matcher|
+        files = files_for_dir_and_matcher(dir_and_matcher[0],
+                                          dir_and_matcher[1])
         all_files << files
       end
       @files_list = all_files.flatten.sort.uniq

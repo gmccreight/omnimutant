@@ -10,8 +10,7 @@ test_passing_regex =
   %r{[1-9][0-9]* tests, [1-9][0-9]* assertions, 0 failures, 0 errors, 0 skips}
 
 runner = Omnimutant::Runner.new(
-  dirs:[source_dir],
-  matchers:[%r{search\.rb$}],
+  dirs_and_matchers:[[source_dir, %r{search\.rb$}]],
   timeout:5,
   test_command:"cd #{base_dir}; rake 2>&1",
   test_passing_regex:test_passing_regex,

@@ -18,8 +18,7 @@ describe Omnimutant::Runner do
         %r{[1-9][0-9]* tests, [1-9][0-9]* assertions, 0 failures, 0 errors, 0 skips}
 
       @runner = Omnimutant::Runner.new(
-        dirs:[dest_dir],
-        matchers:[%r{example4\.rb}],
+        dirs_and_matchers:[[dest_dir, %r{example4\.rb}]],
         timeout:5,
         test_command:"ruby " + dest_dir + "/example4_spec.rb 2>&1",
         test_passing_regex:test_passing_regex,
