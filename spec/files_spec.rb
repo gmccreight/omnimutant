@@ -8,9 +8,6 @@ describe Omnimutant::SourceFilesFinder do
     File.expand_path(File.dirname(__FILE__)) + more
   end
 
-  def get_files(dirs, matchers)
-  end
-
   it "should find the files" do
     dirs_and_matchers = [[full_path_for("/examples/ruby"), %r{example1}]]
 
