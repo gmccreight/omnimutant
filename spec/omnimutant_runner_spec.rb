@@ -7,28 +7,32 @@ describe Omnimutant::Runner do
 
   describe "run" do
 
-    before do
-      src_dir = File.expand_path(File.dirname(__FILE__)) + "/examples/ruby"
-      dest_dir = Dir.mktmpdir
+    describe "a ruby example" do
 
-      FileUtils.cp src_dir + '/example4.rb', dest_dir + '/example4.rb'
-      FileUtils.cp src_dir + '/example4_spec.rb', dest_dir + '/example4_spec.rb'
+      before do
+        src_dir = File.expand_path(File.dirname(__FILE__)) + "/examples/ruby"
+        dest_dir = Dir.mktmpdir
 
-      test_passing_regex =
-        %r{[1-9][0-9]* tests, [1-9][0-9]* assertions, 0 failures, 0 errors, 0 skips}
+        FileUtils.cp src_dir + '/example4.rb', dest_dir + '/example4.rb'
+        FileUtils.cp src_dir + '/example4_spec.rb', dest_dir + '/example4_spec.rb'
 
-      @runner = Omnimutant::Runner.new(
-        dirs_and_matchers:[[dest_dir, %r{example4\.rb}]],
-        timeout:5,
-        test_command:"ruby " + dest_dir + "/example4_spec.rb 2>&1",
-        test_passing_regex:test_passing_regex,
-        verbose:0
-      )
-      @runner.run()
-    end
+        test_passing_regex =
+          %r{[1-9][0-9]* tests, [1-9][0-9]* assertions, 0 failures, 0 errors, 0 skips}
 
-    it "should catch that the 'not five' condition is never tested" do
-      @runner.get_report().select{|x| x[:original_line] =~ /not five/}
+        @runner = Omnimutant::Runner.new(
+          dirs_and_matchers:[[dest_dir, %r{example4\.rb}]],
+          timeout:5,
+          test_command:"ruby " + dest_dir + "/example4_spec.rb 2>&1",
+          test_passing_regex:test_passing_regex,
+          verbose:0
+        )
+        @runner.run()
+      end
+
+      it "should catch that the 'not five' condition is never tested" do
+        @runner.get_report().select{|x| x[:original_line] =~ /not five/}
+      end
+
     end
 
   end
