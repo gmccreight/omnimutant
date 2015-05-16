@@ -1,5 +1,5 @@
 # Run this with:
-# ruby -Ilib ./example_playground.rb
+# ruby -Ilib ./example_mutant_for.rb
 
 require "omnimutant"
 
