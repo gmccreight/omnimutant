@@ -1,4 +1,4 @@
-# Run this with:
+# Run this file with:
 # ruby -Ilib ./example_mutant_for.rb
 
 require "omnimutant"
