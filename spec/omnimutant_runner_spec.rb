@@ -7,7 +7,7 @@ describe Omnimutant::Runner do
 
   describe "run" do
 
-    describe "a ruby example" do
+    describe "the ruby example4" do
 
       before do
         src_dir = File.expand_path(File.dirname(__FILE__)) + "/examples/ruby"
