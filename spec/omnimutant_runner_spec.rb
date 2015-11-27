@@ -17,7 +17,7 @@ describe Omnimutant::Runner do
         FileUtils.cp src_dir + '/example4_spec.rb', dest_dir + '/example4_spec.rb'
 
         test_passing_regex =
-          %r{[1-9][0-9]* tests, [1-9][0-9]* assertions, 0 failures, 0 errors, 0 skips}
+          %r{[1-9][0-9]* (runs|tests), [1-9][0-9]* assertions, 0 failures, 0 errors, 0 skips}
 
         @runner = Omnimutant::Runner.new(
           dirs_and_matchers:[[dest_dir, %r{example4\.rb}]],
