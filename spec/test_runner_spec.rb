@@ -10,7 +10,7 @@ describe Omnimutant::TestRunner do
     command = "ruby " + file
 
     test_passing_regex =
-      %r{[1-9][0-9]* tests, [1-9][0-9]* assertions, 0 failures, 0 errors, 0 skips}
+      %r{[1-9][0-9]* (runs|tests), [1-9][0-9]* assertions, 0 failures, 0 errors, 0 skips}
     runner = Omnimutant::TestRunner.new(
       timeout:timeout, test_command:command, test_passing_regex:test_passing_regex)
     runner.start_test()
