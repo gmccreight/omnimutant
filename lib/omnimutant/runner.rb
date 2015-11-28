@@ -13,6 +13,17 @@ module Omnimutant
       @verbose = verbose
 
       @results = Omnimutant::Results.new()
+
+      Signal.trap("INT") { 
+        reset_mutated_file_to_original_before_shutting_down 
+        exit
+      }
+    end
+
+    def reset_mutated_file_to_original_before_shutting_down
+      if @mutator && !@mutator.is_done_mutating?
+        @mutator.reset_to_original()
+      end
     end
 
     def run
@@ -21,11 +32,11 @@ module Omnimutant
       iterator = Omnimutant::FileIterator.new(files:source_files)
       while ! iterator.is_beyond_end?
         vputs(1, "file: " + iterator.get_current_file)
-        mutator = Omnimutant::FileMutator.
+        @mutator = Omnimutant::FileMutator.
           new(filepath: iterator.get_current_file, verbose:@verbose)
-        while ! mutator.is_done_mutating?
-          mutator.do_next_mutation()
-          vputs(1, "line number: " + mutator.get_current_line_number.to_s)
+        while ! @mutator.is_done_mutating?
+          @mutator.do_next_mutation()
+          vputs(1, "line number: " + @mutator.get_current_line_number.to_s)
 
           test_runner = Omnimutant::TestRunner.new(
             timeout:@timeout,
@@ -37,14 +48,14 @@ module Omnimutant
           if test_runner.passed?
             vputs(3, File.read(iterator.get_current_file))
             @results.log_pass(
-              filepath:iterator.get_current_file,
-              line_number:mutator.get_current_line_number,
-              original_line:mutator.get_original_line,
-              mutated_line:mutator.get_mutated_line,
+              filepath: iterator.get_current_file,
+              line_number: @mutator.get_current_line_number,
+              original_line: @mutator.get_original_line,
+              mutated_line: @mutator.get_mutated_line,
             )
             vputs(1, "unexpected pass")
-            vputs(1, "orig: " + mutator.get_original_line.to_s)
-            vputs(1, "mutated: " + mutator.get_mutated_line.to_s)
+            vputs(1, "orig: " + @mutator.get_original_line.to_s)
+            vputs(1, "mutated: " + @mutator.get_mutated_line.to_s)
           end
         end
         iterator.move_next()
