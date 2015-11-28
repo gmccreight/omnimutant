@@ -137,4 +137,16 @@ module Omnimutant
 
   end
 
+  class MutationStrategyChangeSymbolName < MutationStrategyBase
+
+    def _search
+      %r{:[a-z_][a-z0-9_]*}
+    end
+
+    def _replace
+      ":mutated_symbol_name_that_should_not_exist"
+    end
+
+  end
+
 end

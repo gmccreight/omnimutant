@@ -77,4 +77,17 @@ describe Omnimutant::StringMutator do
 
   end
 
+  describe "symbol" do
+
+    it "should mutate a symbol" do
+      string = "foo = :bar"
+      mutations = [
+        "",
+        "foo = :mutated_symbol_name_that_should_not_exist",
+      ]
+      assert_equal mutations, mutate_string(string)
+    end
+
+  end
+
 end
