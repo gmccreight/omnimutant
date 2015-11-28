@@ -1,12 +1,11 @@
-require_relative "./spec_helper"
+require_relative "../spec_helper"
 
 require "omnimutant/test_runner"
 
 describe Omnimutant::TestRunner do
 
   def example_command_with_timeout(example, timeout)
-    file = File.expand_path(File.dirname(__FILE__)) +
-      "/examples/" + example
+    file = examples_path + "/" + example
     command = "ruby " + file
 
     test_passing_regex =
