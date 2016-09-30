@@ -4,9 +4,10 @@ module Omnimutant
 
   class Runner
 
-    def initialize(dirs_and_matchers:, timeout:, test_command:,
-                   test_passing_regex:, verbose:0)
+    def initialize(dirs_and_matchers:, exclude_dirs_and_matchers: [],
+                   timeout:, test_command:, test_passing_regex:, verbose:0)
       @dirs_and_matchers = dirs_and_matchers
+      @exclude_dirs_and_matchers = exclude_dirs_and_matchers
       @timeout = timeout
       @test_command = test_command
       @test_passing_regex = test_passing_regex
@@ -73,8 +74,10 @@ module Omnimutant
     end
 
     private def get_the_source_files
-      Omnimutant::SourceFilesFinder.
-        new(dirs_and_matchers:@dirs_and_matchers).get_files
+      Omnimutant::SourceFilesFinder.new(
+        dirs_and_matchers: @dirs_and_matchers,
+        exclude_dirs_and_matchers: @exclude_dirs_and_matchers
+      ).get_files
     end
 
   end
