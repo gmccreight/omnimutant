@@ -2,9 +2,8 @@
 
 Mutation testing for any project (ultimately)
 
-For now, it can mutate ruby projects.
-
-Requires Ruby 2.1+
+For now, it can mutate ruby projects.  Python works, too, but that's just by
+chance.
 
 ### Background
 
